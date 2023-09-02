@@ -1,0 +1,150 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  """用户id"""
+  userId: String
+
+  """用户名称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """工号"""
+  employeeNumber: String
+
+  """部门"""
+  departments: String
+
+  """邮箱"""
+  email: String
+
+  """所属公司"""
+  company: String
+
+  """公司的职位"""
+  position: String
+
+  """header颜色"""
+  headerColor: String
+
+  """部门名称"""
+  deptNames: String
+}
+
+type DemandDetail {
+  type: String!
+  amount: Float!
+}
+
+type Service {
+  quickDemands: DemandDetail!
+
+  """具体内容"""
+  specificContent: String
+}
+
+type OperationInfo {
+  date: Float
+  operator: User
+  reason: String
+}
+
+type OutsideParticipant {
+  """名称"""
+  name: String
+
+  """手机号"""
+  tel: String
+
+  """邮箱"""
+  email: String
+
+  """所属公司"""
+  company: String
+
+  """公司的职位"""
+  position: String
+
+  """header颜色"""
+  headerColor: String
+
+  """车牌号 for 外部"""
+  licensePlateNumber: String
+
+  """是否需要邮件、短信等通知"""
+  needNotification: Boolean
+}
+
+type Meeting {
+  """header颜色"""
+  headerColor: String
+
+  """会议主题"""
+  subject: String
+
+  """短链接"""
+  shortLink: String
+
+  """开始时间"""
+  startTime: String
+
+  """结束时间"""
+  endTime: String
+
+  """会议的状态"""
+  status: String
+  type: String
+
+  """设备要求"""
+  deviceRequire: String
+
+  """参会人数"""
+  numberOfPeople: Float
+
+  """应到人数"""
+  shouldAttendance: Float
+
+  """实到人数"""
+  actualAttendance: Float
+  service: Service!
+  checkinInfo: OperationInfo
+  insideParticipant: User
+  outsideParticipant: OutsideParticipant
+  reservedBy: User!
+  finishedInfo: OperationInfo!
+}
+
+type MeetingEdge {
+  meeting: Meeting!
+  cursor: String!
+}
+
+type MeetingResults {
+  code: String!
+  errMsg: String!
+  meetingEdges: [MeetingEdge!]!
+}
+
+type ChuanyinDto {
+  id: Float!
+  username: String!
+}
+
+type Query {
+  searchMeeting(userId: String!, token: String!, queryFilter: MeetingFilter!): MeetingResults!
+  fetchMeetingData(token: String!): ChuanyinDto!
+  searchRoom(token: String!): ChuanyinDto!
+}
+
+input MeetingFilter {
+  userId: String!
+  token: String!
+  queryFilter: QueryFilterInput!
+}
+
+input QueryFilterInput {
+  date: Float!
+}
